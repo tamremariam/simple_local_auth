@@ -41,19 +41,26 @@ class SimpleLocalAuth {
     }
   }
 
-  /// Authenticates with biometrics
   static Future<BiometricAuthResult> authenticate({
     String reason = 'Authenticate',
     BiometricType preferredType = BiometricType.any,
     bool allowDeviceCredential = false,
+    String title = 'Authentication required',
+    String? subtitle,
+    String description = '',
     String cancelButton = 'Cancel',
+    String? confirmationRequired,
   }) async {
     try {
       final success = await _channel.invokeMethod<bool>('authenticate', {
         'reason': reason,
         'preferredType': preferredType.toString().split('.').last,
         'allowDeviceCredential': allowDeviceCredential,
+        'title': title,
+        'subtitle': subtitle,
+        'description': description,
         'cancelButton': cancelButton,
+        'confirmationRequired': confirmationRequired,
       });
 
       return BiometricAuthResult(

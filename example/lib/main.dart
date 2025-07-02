@@ -76,8 +76,11 @@ class _AuthHomeScreenState extends State<AuthHomeScreen> {
 
     try {
       final result = await SimpleLocalAuth.authenticate(
-        reason: 'Verify your identity',
-        cancelButton: 'Not now',
+        title: 'Verify your identity',
+        subtitle: "",
+        preferredType: BiometricType.face,
+        // allowDeviceCredential: true,
+        cancelButton: 'Cancel',
       );
 
       setState(() {
