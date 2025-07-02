@@ -8,7 +8,6 @@ import 'package:simple_local_auth/exceptions/auth_exceptions.dart';
 
 @GenerateMocks([MethodChannel])
 import 'simple_local_auth_test.mocks.dart';
-import 'test_utils.dart';
 
 void main() {
   late MockMethodChannel mockChannel;
