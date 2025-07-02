@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:simple_local_auth/models/auth_results.dart';
+import '../src/types.dart';
 
 class BiometricAuthException implements Exception {
   final String message;

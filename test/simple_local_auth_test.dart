@@ -3,8 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:simple_local_auth/simple_local_auth.dart';
-import 'package:simple_local_auth/models/auth_results.dart';
-import 'package:simple_local_auth/exceptions/auth_exceptions.dart';
 
 @GenerateMocks([MethodChannel])
 import 'simple_local_auth_test.mocks.dart';
