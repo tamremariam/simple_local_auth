@@ -136,14 +136,3 @@ MIT License
 Built with ❤️ by \[Tamremariam Belete].
 
 ---
-simple_local_auth/
-├── lib/
-│   ├── simple_local_auth.dart          # Main export file
-│   ├── models/
-│   │   ├── auth_results.dart
-│   │   ├── biometric_availability.dart
-│   ├── exceptions/
-│   │   ├── auth_exceptions.dart
-│   ├── src/
-│   │   ├── simple_local_auth_impl.dart # Implementation
-│   │   ├── types.dart                  # Enums and types

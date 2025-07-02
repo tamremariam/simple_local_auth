@@ -1,10 +1,9 @@
 name: simple_local_auth
 description: A Flutter plugin for local biometric authentication with clean API and detailed error handling.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/tamremariam/simple_local_auth
 repository: https://github.com/tamremariam/simple_local_auth.git
 issue_tracker: https://github.com/tamremariam/simple_local_auth/issues
-
 
 environment:
   sdk: ^3.8.1
@@ -29,4 +28,3 @@ flutter:
         pluginClass: SimpleLocalAuthPlugin
       ios:
         pluginClass: SimpleLocalAuthPlugin
-
