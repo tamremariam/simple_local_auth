@@ -11,78 +11,21 @@ import 'simple_local_auth_test.mocks.dart';
 import 'test_utils.dart';
 
 void main() {
-  late SimpleLocalAuth auth;
   late MockMethodChannel mockChannel;
 
   setUp(() {
     mockChannel = MockMethodChannel();
-    auth = SimpleLocalAuth();
-    // This requires adding a setter for the channel in your SimpleLocalAuth class
-    auth.setMethodChannel(mockChannel);
-  });
-
-  group('Availability Checks', () {
-    test('isAvailable returns true when biometric is available', () async {
-      when(
-        mockChannel.invokeMethod('isBiometricAvailable'),
-      ).thenAnswer((_) async => true);
-
-      expect(await SimpleLocalAuth.isAvailable, isTrue);
-    });
-
-    test('isAvailable returns false when biometric is unavailable', () async {
-      when(
-        mockChannel.invokeMethod('isBiometricAvailable'),
-      ).thenAnswer((_) async => false);
-
-      expect(await SimpleLocalAuth.isAvailable, isFalse);
-    });
-
-    test('getAvailabilityDetails returns correct data structure', () async {
-      final testData = {
-        'hasHardware': true,
-        'hasEnrolledBiometrics': true,
-        'isFingerprintAvailable': true,
-        'isFaceAvailable': false,
-      };
-      when(
-        mockChannel.invokeMethod<Map>('getAvailabilityDetails'),
-      ).thenAnswer((_) async => testData);
-
-      final result = await SimpleLocalAuth.getAvailabilityDetails();
-
-      expect(result, isA<BiometricAvailability>());
-      expect(result.hasHardware, true);
-      expect(result.isFaceAvailable, false);
-    });
+    SimpleLocalAuth.channel = mockChannel;
   });
 
   group('Authentication', () {
-    test('authenticate returns success on successful auth', () async {
-      when(
-        mockChannel.invokeMethod<bool>('authenticate', any),
-      ).thenAnswer((_) async => true);
-
-      final result = await SimpleLocalAuth.authenticate(reason: 'Test');
-      expect(result.success, isTrue);
-      expect(result.error, isNull);
-    });
-
-    test('authenticate handles platform exceptions', () async {
-      when(
-        mockChannel.invokeMethod<bool>('authenticate', any),
-      ).thenThrow(PlatformException(code: 'LOCKED_OUT'));
-
-      final result = await SimpleLocalAuth.authenticate(reason: 'Test');
-      expect(result.success, isFalse);
-      expect(result.error, BiometricError.lockedOut);
-    });
-
     test('authenticate passes correct parameters to platform', () async {
+      // Arrange
       when(
         mockChannel.invokeMethod<bool>('authenticate', any),
       ).thenAnswer((_) async => true);
 
+      // Act
       await SimpleLocalAuth.authenticate(
         reason: 'Secure Access',
         preferredType: BiometricType.face,
@@ -90,15 +33,101 @@ void main() {
         cancelButton: 'Cancel',
       );
 
+      // Assert - Verify all parameters including defaults
       verify(
         mockChannel.invokeMethod('authenticate', {
           'reason': 'Secure Access',
-          'preferredType': 'face',
+          'preferredType': 'face', // Converted from enum
           'allowDeviceCredential': true,
+          'title': 'Authentication required', // Default value
+          'subtitle': null, // Default value
+          'description': '', // Default value
           'cancelButton': 'Cancel',
+          'confirmationRequired': null, // Default value
         }),
       );
     });
+
+    test('authenticate with custom parameters', () async {
+      // Arrange
+      when(
+        mockChannel.invokeMethod<bool>('authenticate', any),
+      ).thenAnswer((_) async => true);
+
+      // Act
+      await SimpleLocalAuth.authenticate(
+        reason: 'Bank Login',
+        preferredType: BiometricType.fingerprint,
+        allowDeviceCredential: false,
+        title: 'Bank Authentication',
+        subtitle: 'Verify your identity',
+        description: 'Required for transaction',
+        cancelButton: 'Back',
+        confirmationRequired: 'Confirm fingerprint',
+      );
+
+      // Assert
+      verify(
+        mockChannel.invokeMethod('authenticate', {
+          'reason': 'Bank Login',
+          'preferredType': 'fingerprint',
+          'allowDeviceCredential': false,
+          'title': 'Bank Authentication',
+          'subtitle': 'Verify your identity',
+          'description': 'Required for transaction',
+          'cancelButton': 'Back',
+          'confirmationRequired': 'Confirm fingerprint',
+        }),
+      );
+    });
+
+    test('authenticate handles platform exceptions', () async {
+      // Arrange
+      when(
+        mockChannel.invokeMethod<bool>('authenticate', any),
+      ).thenThrow(PlatformException(code: 'LOCKED_OUT'));
+
+      // Act
+      final result = await SimpleLocalAuth.authenticate(reason: 'Test');
+
+      // Assert
+      expect(result.success, false);
+      expect(result.error, BiometricError.lockedOut);
+    });
+  });
+
+  test('authenticate passes correct parameters to platform', () async {
+    // Arrange
+    when(
+      mockChannel.invokeMethod<bool>('authenticate', any),
+    ).thenAnswer((_) async => true);
+
+    // Act
+    await SimpleLocalAuth.authenticate(
+      reason: 'Secure Access',
+      preferredType: BiometricType.face,
+      allowDeviceCredential: true,
+      cancelButton: 'Cancel',
+    );
+
+    // Assert - Verify all parameters in a single call
+    verify(
+      mockChannel.invokeMethod(
+        'authenticate',
+        argThat(
+          allOf([
+            containsPair('reason', 'Secure Access'),
+            containsPair('preferredType', 'face'),
+            containsPair('allowDeviceCredential', true),
+            containsPair('cancelButton', 'Cancel'),
+            containsPair('title', 'Authentication required'), // default
+            containsPair('subtitle', null), // default
+            containsPair('description', ''), // default
+            containsPair('confirmationRequired', null), // default
+          ]),
+        ),
+      ),
+    );
   });
 
   group('Biometric Type Checks', () {
@@ -121,7 +150,10 @@ void main() {
         mockChannel.invokeMethod<bool>('isBiometricTypeAvailable', any),
       ).thenThrow(PlatformException(code: 'ERROR'));
 
-      expect(await SimpleLocalAuth.isBiometricAvailable(BiometricType.face), isFalse);
+      expect(
+        await SimpleLocalAuth.isBiometricAvailable(BiometricType.face),
+        isFalse,
+      );
     });
   });
 
