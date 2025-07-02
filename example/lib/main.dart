@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simple_local_auth/models/auth_results.dart';
 import 'package:simple_local_auth/simple_local_auth.dart';
 import 'package:flutter/services.dart';
 
@@ -78,8 +77,8 @@ class _AuthHomeScreenState extends State<AuthHomeScreen> {
       final result = await SimpleLocalAuth.authenticate(
         title: 'Verify your identity',
         subtitle: "",
-        preferredType: BiometricType.face,
-        // allowDeviceCredential: true,
+        preferredType: BiometricType.fingerprint,
+        allowDeviceCredential: true,
         cancelButton: 'Cancel',
       );
 
