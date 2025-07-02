@@ -71,7 +71,7 @@ class _AuthHomeScreenState extends State<AuthHomeScreen> {
     setState(() {
       _isAuthenticating = true;
       _authStatus = 'Authenticating...';
-      _statusColor = Colors.blue;
+      _statusColor = Colors.black;
     });
 
     try {

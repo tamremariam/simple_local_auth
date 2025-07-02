@@ -9,6 +9,7 @@ android {
     namespace = "com.example.simple_local_auth_example"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -37,6 +38,13 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+    dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22")
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
+}
 }
 
 flutter {
