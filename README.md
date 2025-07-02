@@ -4,11 +4,13 @@ A lightweight and developer-friendly Flutter plugin to authenticate users using 
 
 ## ✨ Features
 
-- Check biometric hardware availability
-- Detect enrolled biometrics
-- Support for Fingerprint and Face ID
-- Simple API to trigger biometric authentication
-- Smooth integration for Android and iOS
+* Check biometric hardware availability
+* Detect enrolled biometrics
+* Support for Fingerprint and Face ID
+* Simple API to trigger biometric authentication
+* Smooth integration for Android and iOS
+* Supports Localization
+* Customizable authentication prompts (title, reason, cancel button, etc.)
 
 ## 📦 Installation
 
@@ -86,6 +88,20 @@ if (result.success) {
 }
 ```
 
+## 🌍 Localization & Customization
+
+`simple_local_auth` is designed with flexibility in mind. It supports:
+
+* Full localization of prompt messages, including:
+
+  * Authentication reason
+  * Cancel button text
+  * Titles and subtitles (where supported)
+* Custom display strings to enhance user experience
+* Seamless integration with localization packages
+
+This gives developers full control over how messages are shown to users, making authentication immersive, polished, and aligned with your app’s tone and branding.
+
 ## 🧪 Example App
 
 A full-featured example is included in the `example/` directory.
@@ -99,35 +115,35 @@ flutter run
 
 The app shows:
 
-- Biometric availability
-- Authentication status
-- Feedback on success/failure
+* Biometric availability
+* Authentication status
+* Feedback on success/failure
 
 ## 📷 UI Preview
 
-![Authentication Screenshot](https://raw.githubusercontent.com/tamremariam/simple_local_auth/main/screenshots/Screenshot_20250702_191031.png)
-![Authentication Screenshot](https://raw.githubusercontent.com/tamremariam/simple_local_auth/main/screenshots/Screenshot_20250702_191144.png)
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/tamremariam/simple_local_auth/main/assets/Screenshot_20250702_191031.png" alt="Authentication Screenshot 1" width="300"/>
+  <img src="https://raw.githubusercontent.com/tamremariam/simple_local_auth/main/assets/Screenshot_20250702_191144.png" alt="Authentication Screenshot 2" width="300"/>
+</p>
 
 ## ✅ Capabilities Checked
 
-- Hardware Availability ✅
-- Biometrics Enrolled ✅
-- Fingerprint Support ✅
-- Face ID Support ✅
+* Hardware Availability ✅
+* Biometrics Enrolled ✅
+* Fingerprint Support ✅
+* Face ID Support ✅
 
 ## 📌 Notes
 
-- On some Android devices, users must manually enroll biometrics.
-- On iOS, make sure Face ID/Touch ID is configured in device settings.
+* On some Android devices, users must manually enroll biometrics.
+* On iOS, ensure Face ID/Touch ID is configured in device settings.
 
 ## 🤝 Contributing
 
 Contributions are welcome! To contribute:
 
 1. Fork the repository
-2. Create a new branch
-3. Submit a pull request with a clear description
+2. Submit a pull request with a clear description
 
 ## 📄 License
 
