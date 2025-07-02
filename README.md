@@ -105,7 +105,9 @@ The app shows:
 
 ## 📷 UI Preview
 
-<img src="https://user-images.githubusercontent.com/your-screenshot.png" width="300"/>
+![Authentication Screenshot](https://raw.githubusercontent.com/tamremariam/simple_local_auth/main/screenshots/Screenshot_20250702_191031.png)
+![Authentication Screenshot](https://raw.githubusercontent.com/tamremariam/simple_local_auth/main/screenshots/Screenshot_20250702_191144.png)
+
 
 ## ✅ Capabilities Checked
 
